@@ -1,1 +1,1 @@
-"# SnippetOrganiser" 
+# SnippetOrganiser

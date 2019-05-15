@@ -1,87 +1,60 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'addSnippet.ui'
-#
-# Created by: PyQt5 UI code generator 5.12.1
-#
-# WARNING! All changes made in this file will be lost!
-
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QListWidget, QListWidgetItem, QMainWindow, QDialog, QMessageBox
+from addSnippetGui import Ui_Dialog
 import snippetApi as api
-
-class Ui_Dialog(object):
-
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(1124, 679)
-        self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
-        self.buttonBox.setGeometry(QtCore.QRect(920, 10, 181, 32))
-        self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
-        self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName("buttonBox")
-        self.textSnippet = QtWidgets.QPlainTextEdit(Dialog)
-        self.textSnippet.setGeometry(QtCore.QRect(20, 50, 641, 601))
-        self.textSnippet.setObjectName("textSnippet")
-        self.textFileName = QtWidgets.QTextEdit(Dialog)
-        self.textFileName.setGeometry(QtCore.QRect(690, 180, 411, 31))
-        self.textFileName.setObjectName("textFileName")
-        self.textDescription = QtWidgets.QTextEdit(Dialog)
-        self.textDescription.setGeometry(QtCore.QRect(690, 330, 401, 321))
-        self.textDescription.setObjectName("textDescription")
-        self.label = QtWidgets.QLabel(Dialog)
-        self.label.setGeometry(QtCore.QRect(30, 10, 121, 41))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.label.setFont(font)
-        self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(Dialog)
-        self.label_2.setGeometry(QtCore.QRect(690, 140, 121, 41))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.label_2.setFont(font)
-        self.label_2.setObjectName("label_2")
-        self.label_3 = QtWidgets.QLabel(Dialog)
-        self.label_3.setGeometry(QtCore.QRect(690, 280, 121, 41))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.label_3.setFont(font)
-        self.label_3.setObjectName("label_3")
-        self.textFolder = QtWidgets.QTextEdit(Dialog)
-        self.textFolder.setGeometry(QtCore.QRect(690, 250, 411, 31))
-        self.textFolder.setObjectName("textFolder")
-        self.label_4 = QtWidgets.QLabel(Dialog)
-        self.label_4.setGeometry(QtCore.QRect(690, 210, 121, 41))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.label_4.setFont(font)
-        self.label_4.setObjectName("label_4")
-        self.textTitle = QtWidgets.QTextEdit(Dialog)
-        self.textTitle.setGeometry(QtCore.QRect(690, 80, 411, 31))
-        self.textTitle.setObjectName("textTitle")
-        self.label_5 = QtWidgets.QLabel(Dialog)
-        self.label_5.setGeometry(QtCore.QRect(690, 30, 121, 41))
-        font = QtGui.QFont()
-        font.setPointSize(16)
-        self.label_5.setFont(font)
-        self.label_5.setObjectName("label_5")
-        self.retranslateUi(Dialog)
-        self.buttonBox.rejected.connect(Dialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
-
-    def retranslateUi(self, Dialog):
-        _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Add Snippet"))
-        self.label.setText(_translate("Dialog", "Snippet"))
-        self.label_2.setText(_translate("Dialog", "File Name"))
-        self.label_3.setText(_translate("Dialog", "Description"))
-        self.label_4.setText(_translate("Dialog", "Folder"))
-        self.label_5.setText(_translate("Dialog", "Title"))
-
-    def fillBoxes(self, id=None):
+from style import getStyle
+class Dialog(QDialog):
+    def __init__(self,id=None,parent=None):
+        super().__init__()
+        self.design = Ui_Dialog()
+        self.design.setupUi(self)
+        self.parent = parent
+        self.id=id
+        ##with open("style.stylesheet") as sh:
+            #self.setStyleSheet(sh.read())
+        self.setStyleSheet(getStyle())
+        self.show()
+        self.design.buttonBox.accepted.connect(self.acceptSnippet)
         if id is not None:
-            snippet = api.singleSnippetMeta(id)
-            raw = api.singleSnippetApi(id)
-            print(snippet)
-            
-        
+            self.fillBoxes(id)
 
+    def closeEvent(self, QCloseEvent):
+        self.parent.refresh()
+
+    def acceptSnippet(self):
+        if "." in self.design.textFileName.toPlainText():
+            if self.id==None:
+                print("new")
+                api.postSnippet(self.design.textTitle.toPlainText(),
+                                self.design.textFileName.toPlainText(),
+                                self.design.textFolder.toPlainText(),
+                                self.design.textDescription.toPlainText(),
+                                self.design.textSnippet.toPlainText())
+            else:
+                print("update")
+                api.updateSnippet(self.id,
+                                self.design.textTitle.toPlainText(),
+                                self.design.textFileName.toPlainText(),
+                                self.design.textFolder.toPlainText(),
+                                self.design.textDescription.toPlainText(),
+                                self.design.textSnippet.toPlainText())
+            self.parent.refresh()
+            self.accept()
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Plase enter a valid file type")
+            msg.setWindowTitle("Invalid file")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.show()
+            msg.exec_()
+
+    def fillBoxes(self, id):
+      
+        snippet = api.singleSnippetMeta(id)
+        raw = api.singleSnippetApi(id)
+        self.design.textSnippet.setPlainText(raw)
+        self.design.textDescription.setPlainText(snippet["description"].rsplit("\n")[0])
+        self.design.textTitle.setPlainText(snippet["title"])
+        self.design.textFolder.setPlainText(snippet["description"].split("\n")[0])
+        self.design.textFileName.setPlainText(snippet["file_name"])
+    
