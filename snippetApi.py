@@ -28,9 +28,9 @@ def snippetAPI():
     snippetObject = {}
     r = requests.get("https://"+ server +"/api/v4/snippets/",
                      headers={"PRIVATE-TOKEN": key})
-    print(r.text)
+
     allSnippets = json.loads(r.text)
-    print(allSnippets)
+
     allSnippetsNames = {x["id"]: x["title"] for x in allSnippets}
     allSnippetsIDs = [x["id"] for x in allSnippets]
     allSnippetsEndings = []

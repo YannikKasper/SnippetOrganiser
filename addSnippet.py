@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QApplication, QLabel, QWidget, QListWidget, QListWidgetItem, QMainWindow, QDialog, QMessageBox
 from addSnippetGui import Ui_Dialog
 import snippetApi as api
-from style import getStyle
+from style import getStyleAll
 class Dialog(QDialog):
     def __init__(self,id=None,parent=None):
         super().__init__()
@@ -11,7 +11,7 @@ class Dialog(QDialog):
         self.id=id
         ##with open("style.stylesheet") as sh:
             #self.setStyleSheet(sh.read())
-        self.setStyleSheet(getStyle())
+        self.setStyleSheet(getStyleAll())
         self.show()
         self.design.buttonBox.accepted.connect(self.acceptSnippet)
         if id is not None:
@@ -23,14 +23,12 @@ class Dialog(QDialog):
     def acceptSnippet(self):
         if "." in self.design.textFileName.toPlainText():
             if self.id==None:
-                print("new")
                 api.postSnippet(self.design.textTitle.toPlainText(),
                                 self.design.textFileName.toPlainText(),
                                 self.design.textFolder.toPlainText(),
                                 self.design.textDescription.toPlainText(),
                                 self.design.textSnippet.toPlainText())
             else:
-                print("update")
                 api.updateSnippet(self.id,
                                 self.design.textTitle.toPlainText(),
                                 self.design.textFileName.toPlainText(),
@@ -53,8 +51,9 @@ class Dialog(QDialog):
         snippet = api.singleSnippetMeta(id)
         raw = api.singleSnippetApi(id)
         self.design.textSnippet.setPlainText(raw)
-        self.design.textDescription.setPlainText(snippet["description"].rsplit("\n")[0])
-        self.design.textTitle.setPlainText(snippet["title"])
         self.design.textFolder.setPlainText(snippet["description"].split("\n")[0])
+        self.design.textTitle.setPlainText(snippet["title"])
+        if "\n" in snippet["description"]:
+            self.design.textDescription.setPlainText(snippet["description"].split("\n",1)[1])
         self.design.textFileName.setPlainText(snippet["file_name"])
     

@@ -9,7 +9,7 @@ import os
 import pyperclip
 from addSnippetGui import Ui_Dialog
 from addSnippet import Dialog
-from style import getStyle
+from style import getStyleAll
 
 
 class Form(QMainWindow):
@@ -27,7 +27,7 @@ class Form(QMainWindow):
         self.timer.setSingleShot(True)
         self.snippetOrganiserform = Ui_MainWindow()
         self.snippetOrganiserform.setupUi(self)
-        self.setStyleSheet(getStyle())
+        self.setStyleSheet(getStyleAll())
         self.show()
         self.snippetOrganiserform.languageList.itemClicked.connect(self.listClicked)
         self.timer.timeout.connect(self.singleClick)
@@ -75,7 +75,6 @@ class Form(QMainWindow):
     def snippetClickDetection(self, item):
         if not self.timer.isActive():
             self.timer.start()
-            print(item)
             self.clickedItem = item
             return
         else:
@@ -108,6 +107,7 @@ class Form(QMainWindow):
 
         if self.selectedList=="language":
             self.snippetOrganiserform.label.setText("Programming Language")
+            self.snippetOrganiserform.btnBack.setVisible(False)
             for snippetKey in self.snippetKeys:
                 item = QListWidgetItem(snippetKey)
                 self.snippetOrganiserform.languageList.addItem(item)
