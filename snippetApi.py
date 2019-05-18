@@ -1,5 +1,6 @@
 import requests
 import json
+import sys, os
 langTrans = {
     "bas": "VBA",
     "py": "Python",
@@ -23,6 +24,10 @@ server = "gitlab.com"
 #rle: git.rle.de
 #my: gitlab.com
 
+def resource_path(relative_path):
+     if hasattr(sys, '_MEIPASS'):
+         return os.path.join(sys._MEIPASS, relative_path)
+     return os.path.join(os.path.abspath("."), relative_path)
 
 def snippetAPI():
     snippetObject = {}

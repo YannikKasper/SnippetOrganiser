@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import snippetApi as api
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
         MainWindow.setPalette(palette)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../../Downloads/puzzle-piece-silhouette.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(api.resource_path("pic.png")), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setWindowOpacity(0.98)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -38,7 +38,7 @@ class Ui_MainWindow(object):
         self.label.setScaledContents(True)
         self.label.setWordWrap(True)
         self.label.setObjectName("label")
-        self.textEditSnippet = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEditSnippet = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.textEditSnippet.setGeometry(QtCore.QRect(230, 310, 641, 401))
         self.textEditSnippet.setObjectName("textEditSnippet")
         self.languageList = QtWidgets.QListWidget(self.centralwidget)

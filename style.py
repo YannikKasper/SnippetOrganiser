@@ -134,6 +134,9 @@ QGroupBox:focus {
 QTextEdit:focus {
     border: 2px solid QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
 }
+QPlainTextEdit:focus {
+    border: 2px solid QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
+}
 
 QScrollBar:horizontal {
     border: 1px solid #222222;

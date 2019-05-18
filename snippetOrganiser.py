@@ -47,7 +47,7 @@ class Form(QMainWindow):
         self.showList()
 
     def clipClicked(self):
-        pyperclip.copy(self.snippetOrganiserform.textSnippet.toPlainText())
+        pyperclip.copy(self.snippetOrganiserform.textEditSnippet.toPlainText())
 
     def addSnippet(self,task):
         self.dialog = Dialog(None,self)
@@ -85,7 +85,8 @@ class Form(QMainWindow):
    
     def singleClick(self):
         snippetID = self.snippets[self.selectedLanguage][self.selectedFolder][self.clickedItem]["id"]
-        self.snippetOrganiserform.textEditSnippet.setText(api.singleSnippetApi(snippetID))
+        
+        self.snippetOrganiserform.textEditSnippet.setPlainText(api.singleSnippetApi(snippetID))
         if "\n" in self.snippets[self.selectedLanguage][self.selectedFolder][self.clickedItem]["description"]:
             self.snippetOrganiserform.textDescription.setText(self.snippets[self.selectedLanguage][self.selectedFolder][self.clickedItem]["description"].split("\n",1)[1])
         self.selectedSnippet =self.clickedItem

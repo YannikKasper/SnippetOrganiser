@@ -82,7 +82,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QTextEdit" name="textEditSnippet">
+   <widget class="QPlainTextEdit" name="plainTextEditSnippet">
     <property name="geometry">
      <rect>
       <x>230</x>

@@ -17,6 +17,7 @@ a = Analysis(['snippetOrganiser.py'],
              noarchive=False)
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
+a.datas += [ ('pic.png', '.\\pic.png', 'DATA')]
 exe = EXE(pyz,
           a.scripts,
           a.binaries,
@@ -29,4 +30,4 @@ exe = EXE(pyz,
           strip=False,
           upx=True,
           runtime_tmpdir=None,
-          console=False )
+          console=False , icon='C:\\Users\\Frozzy\\Downloads\\puzzle-piece-silhouette.ico')

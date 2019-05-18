@@ -1,3 +1,4 @@
-Dropdown folder
 take title as filename (red if no dot)
-icon to addsnippets
+correct plain to text
+save encrypted keys
+config
