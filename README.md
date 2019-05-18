@@ -18,10 +18,20 @@ python3 ./snippetOrganiser.py
 
 
 ### Create Gitlab API Token
-
+* Login into Gitlab
+* Goto settings on the right top
+* select the category on the left side called "access token"
+* Enter your name and check the box called "api"
+* Enter create personal access token and the token will appear
 
 
 ### Create Executable with Pyinstaller
-
-
+#### From the command line
+```
+pyinstaller .\snippetOrganiser.py --add-data "pic.png:pic.png" --onefile --noconsole --icon=[path]
+```
+#### With the snippetOrganiser.spec file:
+```
+pyinstaller .\snippetOrganiser.spec
+```
 ### Credentials
