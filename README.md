@@ -6,9 +6,9 @@ Snippets are listed by:
     - their title
 
 ## Execute
-'''
+```
 python3 ./snippetOrganiser.py
-'''
+```
 
 ## Dependencys
 * Python 3.x
