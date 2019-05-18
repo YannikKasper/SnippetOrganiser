@@ -21,6 +21,7 @@ class Form(QMainWindow):
         self.selectedSnippet = ""
         self.selectedSnippetID = ""
         self.selectedList = "language"
+        self.generalFolders=[]
         super().__init__()
         self.timer = QTimer()
         self.timer.setInterval(250)
@@ -94,6 +95,11 @@ class Form(QMainWindow):
 
     def refresh(self):
         self.snippets = api.snippetAPI()
+        for lang in self.snippets:
+            for folder in self.snippets[lang]:
+                if folder not in self.generalFolders:
+                        self.generalFolders.append(folder)
+
         self.snippetKeys = self.snippets.keys()
         self.snippetOrganiserform.textDescription.clear()
         self.snippetOrganiserform.textEditSnippet.clear()

@@ -16,10 +16,10 @@ langTrans = {
     "css":"CSS",
     "sql":"SQL"
 }
-key = "9-FTkPbyQTyzx_kZhoPw"
+key = "P9EQ9LPGkbNHyi6bK6jx"
 #rle: 9-FTkPbyQTyzx_kZhoPw
 #my: P9EQ9LPGkbNHyi6bK6jx
-server = "git.rle.de"
+server = "gitlab.com"
 #rle: git.rle.de
 #my: gitlab.com
 

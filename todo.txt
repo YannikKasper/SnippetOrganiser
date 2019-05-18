@@ -1,0 +1,3 @@
+Dropdown folder
+take title as filename (red if no dot)
+icon to addsnippets

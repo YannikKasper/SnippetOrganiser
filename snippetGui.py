@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '.\snippet.ui'
+# Form implementation generated from reading ui file 'snippet.ui'
 #
 # Created by: PyQt5 UI code generator 5.12.1
 #
@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        MainWindow.setObjectName("SnippetOrganiser")
+        MainWindow.setObjectName("MainWindow")
         MainWindow.resize(914, 771)
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 0))
@@ -24,6 +24,10 @@ class Ui_MainWindow(object):
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Button, brush)
         MainWindow.setPalette(palette)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("../../../Downloads/puzzle-piece-silhouette.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        MainWindow.setWindowIcon(icon)
+        MainWindow.setWindowOpacity(0.98)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -64,6 +68,7 @@ class Ui_MainWindow(object):
         self.addButton.setPalette(palette)
         self.addButton.setObjectName("addButton")
         self.changeButton = QtWidgets.QPushButton(self.centralwidget)
+        
         self.changeButton.setGeometry(QtCore.QRect(310, 720, 100, 31))
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(0, 0, 127))
@@ -181,7 +186,7 @@ class Ui_MainWindow(object):
         self.label_6.setWordWrap(True)
         self.label_6.setObjectName("label_6")
         self.labelSnippetPath = QtWidgets.QLabel(self.centralwidget)
-        self.labelSnippetPath.setGeometry(QtCore.QRect(410, 60, 171, 31))
+        self.labelSnippetPath.setGeometry(QtCore.QRect(410, 60, 461, 31))
         font = QtGui.QFont()
         font.setPointSize(16)
         self.labelSnippetPath.setFont(font)
@@ -199,7 +204,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Snippet Organiser"))
         self.label.setText(_translate("MainWindow", "Programming Languages"))
         self.addButton.setText(_translate("MainWindow", "Add snippet"))
         self.changeButton.setText(_translate("MainWindow", "changeSnippet"))

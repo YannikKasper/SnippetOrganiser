@@ -101,7 +101,7 @@ QComboBox {
     background-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #565656, stop: 0.1 #525252, stop: 0.5 #4e4e4e, stop: 0.9 #4a4a4a, stop: 1 #464646);
     border-style: solid;
     border: 1px solid #1e1e1e;
-    border-radius: 5;
+
 }
 
 QComboBox:hover,
@@ -122,22 +122,9 @@ QComboBox QAbstractItemView {
     selection-background-color: QLinearGradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #ffa02f, stop: 1 #d7801a);
 }
 
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 15px;
-
-    border-left-width: 0px;
-    border-left-color: darkgray;
-    border-left-style: solid;
-    /* just a single line */
-    border-top-right-radius: 3px;
-    /* same radius as the QComboBox */
-    border-bottom-right-radius: 3px;
-}
 
 QComboBox::down-arrow {
-    image: url(:/down_arrow.png);
+    color: #ffaa00;
 }
 
 QGroupBox:focus {
