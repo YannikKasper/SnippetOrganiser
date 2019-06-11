@@ -17,12 +17,19 @@ langTrans = {
     "css":"CSS",
     "sql":"SQL"
 }
-key = "P9EQ9LPGkbNHyi6bK6jx"
-#rle: 9-FTkPbyQTyzx_kZhoPw
-#my: P9EQ9LPGkbNHyi6bK6jx
-server = "gitlab.com"
-#rle: git.rle.de
-#my: gitlab.com
+key = ""
+server = ""
+
+
+def readConfig():
+    global key
+    global server
+    data ={}
+    with open("C:\\ProgramData\\snippetOrganiser\\config.txt","r") as confi:
+        data = json.load(confi)
+    key = data["token"]
+    server = data["server"]
+    return key,server
 
 def resource_path(relative_path):
      if hasattr(sys, '_MEIPASS'):
@@ -30,31 +37,34 @@ def resource_path(relative_path):
      return os.path.join(os.path.abspath("."), relative_path)
 
 def snippetAPI():
-    snippetObject = {}
-    r = requests.get("https://"+ server +"/api/v4/snippets/",
-                     headers={"PRIVATE-TOKEN": key})
+    try:
+        snippetObject = {}
+        r = requests.get("https://"+ server +"/api/v4/snippets/",
+                        headers={"PRIVATE-TOKEN": key})
 
-    allSnippets = json.loads(r.text)
+        allSnippets = json.loads(r.text)
 
-    allSnippetsNames = {x["id"]: x["title"] for x in allSnippets}
-    allSnippetsIDs = [x["id"] for x in allSnippets]
-    allSnippetsEndings = []
+        allSnippetsNames = {x["id"]: x["title"] for x in allSnippets}
+        allSnippetsIDs = [x["id"] for x in allSnippets]
+        allSnippetsEndings = []
 
-    for snippet in allSnippets:
-        folder = snippet["description"].split("\n")[0].split("\r")[0]
-        if snippet["file_name"].split(".")[-1] not in langTrans.keys():
-            language = "Others"
-        else:
-            language = langTrans[snippet["file_name"].split(".")[-1]]
-        if language not in snippetObject.keys():
-            snippetObject[language] = {}
-        if folder not in snippetObject[language].keys():
-            snippetObject[language][folder] = {}
-        if snippet["title"] not in snippetObject[language][folder].keys():
-            snippetObject[language][folder][snippet["title"]]={}
-        snippetObject[language][folder][snippet["title"]]["id"] = snippet["id"]
-        snippetObject[language][folder][snippet["title"]]["description"] = snippet["description"]
-    return snippetObject
+        for snippet in allSnippets:
+            folder = snippet["description"].split("\n")[0].split("\r")[0]
+            if snippet["file_name"].split(".")[-1] not in langTrans.keys():
+                language = "Others"
+            else:
+                language = langTrans[snippet["file_name"].split(".")[-1]]
+            if language not in snippetObject.keys():
+                snippetObject[language] = {}
+            if folder not in snippetObject[language].keys():
+                snippetObject[language][folder] = {}
+            if snippet["title"] not in snippetObject[language][folder].keys():
+                snippetObject[language][folder][snippet["title"]]={}
+            snippetObject[language][folder][snippet["title"]]["id"] = snippet["id"]
+            snippetObject[language][folder][snippet["title"]]["description"] = snippet["description"]
+        return snippetObject
+    except:
+        return {}
 
 
 def postSnippet(title, file_name, folder, description, content):
@@ -81,3 +91,19 @@ def singleSnippetMeta(id):
 
     return json.loads(r.text)
 
+def checkConnection(server, key):
+    try:
+        r= requests.get("https://"+ server +"/api/v4/snippets/",
+                            headers={"PRIVATE-TOKEN": key},timeout=5)
+        
+        return True
+    except requests.exceptions.RequestException as err:
+        return False
+    except requests.exceptions.InvalidURL as InvalidURL:
+        return False
+    except requests.exceptions.HTTPError as errh:
+        return False
+    except requests.exceptions.ConnectionError as errc:
+        return False
+    except requests.exceptions.Timeout as errt:
+        return False  
