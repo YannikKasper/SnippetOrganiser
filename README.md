@@ -4,7 +4,9 @@ Snippets are listed by:
     - their programming language
     - their Category: organised as Folder (first line of your description)
     - their title
+
 <img src="./static/usage.png" width="500" height="250">
+
 ## Execute
 ```
 python3 ./snippetOrganiser.py
