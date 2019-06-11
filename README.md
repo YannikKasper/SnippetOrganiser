@@ -36,4 +36,3 @@ pyinstaller .\snippetOrganiser.py --add-data "pic.png:pic.png" --onefile --nocon
 ```
 pyinstaller .\snippetOrganiser.spec
 ```
-### Credentials
