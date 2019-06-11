@@ -5,7 +5,7 @@ Snippets are listed by:
     - their Category: organised as Folder (first line of your description)
     - their title
 
-<img src="./static/usage.PNG" width="500" height="250">
+<img src="./static/usage.PNG" width="300" height="300">
 
 ## Execute
 ```
